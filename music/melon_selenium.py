@@ -1,18 +1,16 @@
 import os
 import sys
 
-# 현재 파일의 경로를 가져옴
 current_path = os.path.abspath(os.path.dirname(__file__))
 
-# 프로젝트 폴더(config 폴더의 상위 폴더)의 경로를 가져옴
 project_path = os.path.abspath(os.path.join(current_path, ".."))
 
-# 프로젝트 경로를 시스템 경로에 추가
 sys.path.append(project_path)
 
-# DJANGO_SETTINGS_MODULE 환경 변수 설정
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+
 import django
+
 django.setup()
 
 from selenium import webdriver

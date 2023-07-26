@@ -25,29 +25,27 @@ def create_folder_if_not_exists(directory):
 
 def make_url(search_term):
     base_url = 'https://search.naver.com/search.naver?where=image&section=image&query='
-    end_url = '&res_fr=0&res_to=0&sm=tab_opt&color=&ccl=2' \
-              '&nso=so%3Ar%2Ca%3Aall%2Cp%3Aall&recent=0&datetype=0&startdate=0&enddate=0&gif=0&optStr=&nso_open=1'
 
-    return base_url + quote_plus(search_term) + end_url
+    return base_url + quote_plus(search_term)
 
 def crawl_images(search_term):
-    ssl._create_default_https_context = ssl._create_default_https_context = ssl._create_unverified_context
+    ssl._create_default_https_context = ssl._create_unverified_context
 
     url = make_url(search_term)
 
-    browser = webdriver.Chrome()
-    browser.implicitly_wait(3)
-    browser.get(url)
-
-    images = browser.find_elements(By.CSS_SELECTOR, "img._image")
+    driver = webdriver.Chrome()
+    driver.implicitly_wait(3)
+    driver.get(url)
+    images = driver.find_elements(By.CLASS_NAME, "_image")
     save_path = "/Users/hangyeol/" + search_term + "/"
     create_folder_if_not_exists(save_path)
 
     save_images(images, save_path)
 
     print(search_term + "저장 성공")
-    browser.close()
+    driver.quit()
 
 
 if __name__ == '__main__':
     crawl_images(input('원하는 검색어: '))
+
